@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dova health & wellness</title>
+  <meta
+    name="description"
+    content="dova health & wellness is a simple wellness app designed to support daily habits, mindfulness, and personal well-being."
+  />
+  <style>
+    :root {
+      --bg-1: #4f55ff;
+      --bg-2: #2a2fb8;
+      --bg-3: #12184f;
+      --card: rgba(255, 255, 255, 0.1);
+      --card-border: rgba(255, 255, 255, 0.16);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.82);
+      --soft: rgba(255, 255, 255, 0.65);
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,255,255,0.10), transparent 24%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .site-wrap {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+      background: rgba(10, 14, 45, 0.28);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+
+    .brand-mini {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: lowercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.98rem;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 70px 0 42px;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.07));
+      border: 1px solid var(--card-border);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 34px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.6rem, 5vw, 4.5rem);
+      line-height: 0.95;
+      margin-bottom: 16px;
+      text-transform: lowercase;
+      letter-spacing: -1px;
+    }
+
+    .hero-copy .sub {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 620px;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.16);
+      transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: rgba(255,255,255,0.94);
+      color: #1a2168;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .hero-note {
+      color: var(--soft);
+      font-size: 0.95rem;
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-shell {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand-image {
+      width: 100%;
+      display: block;
+      border-radius: 24px;
+    }
+
+    section {
+      padding: 20px 0 24px;
+    }
+
+    .section-heading {
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      margin-bottom: 8px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.99rem;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .list li {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 15px 16px;
+      border-radius: 16px;
+      color: var(--muted);
+    }
+
+    .cta {
+      margin: 14px 0 46px;
+    }
+
+    .cta-box {
+      text-align: center;
+      padding: 34px 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08));
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      margin-bottom: 10px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+
+    footer {
+      padding: 16px 0 42px;
+    }
+
+    .footer-box {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--soft);
+      font-size: 0.94rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--soft);
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 920px) {
+      .hero-card,
+      .grid-3,
+      .grid-2,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      .hero-card {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        gap: 12px;
+      }
+
+      .nav-links {
+        gap: 14px;
+      }
+
+      .hero-copy h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-copy .sub {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="nav">
+      <a class="brand-mini" href="index.html">dova</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="usage.html">Usage</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="site-wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <p class="sub">health & wellness</p>
+          <h1>dova</h1>
+          <p>
+            A calm, simple wellness experience designed to support better daily habits,
+            mindful routines, and personal well-being without clutter or distractions.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#about" class="btn btn-primary">Learn More</a>
+            <a href="privacy.html" class="btn btn-secondary">Privacy Policy</a>
+          </div>
+
+          <p class="hero-note">
+            Built with simplicity, privacy, and everyday support in mind.
+          </p>
+        </div>
+
+        <div class="hero-visual">
+          <div class="image-shell">
+            <img
+              src="dova-image.png"
+              alt="dova health and wellness brand image"
+              class="brand-image"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-heading">
+        <h2>About dova</h2>
+        <p>
+          dova health & wellness is designed for users who want a more supportive and
+          approachable way to stay connected to their personal wellness journey.
+        </p>
+      </div>
+
+      <div class="card">
+        <p>
+          dova offers a clean, easy-to-use experience for supporting daily wellness habits,
+          encouraging consistency, and creating space for mindful self-care. The app is
+          designed to feel simple, calm, and accessible, making it easier to stay focused
+          on your routine without feeling overwhelmed.
+        </p>
+        <br />
+        <p>
+          Whether you are trying to stay organized, maintain healthy habits, or build a
+          stronger day-to-day wellness routine, dova is built to support that experience
+          with clarity and ease.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>What makes it different</h2>
+        <p>
+          A premium wellness experience does not need to be complicated. dova focuses on
+          what matters most: ease, comfort, and consistency.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="feature-icon">✦</div>
+          <h3>Simple daily support</h3>
+          <p>
+            Designed to help users stay consistent with wellness habits in a way that feels
+            manageable and easy to return to every day.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="feature-icon">✦</div>
+          <h3>Clean and calming design</h3>
+          <p>
+            A polished visual experience that feels modern, soft, and focused on personal well-being.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="feature-icon">✦</div>
+          <h3>Privacy-first experience</h3>
+          <p>
+            Built around a local-use approach so your experience stays personal and your activity stays private.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split">
+        <div class="card">
+          <h3>Designed for everyday wellness</h3>
+          <ul class="list">
+            <li>Support healthy routines and daily wellness habits</li>
+            <li>Stay motivated with a simple and encouraging experience</li>
+            <li>Focus on consistency without unnecessary complexity</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Built with ease in mind</h3>
+          <ul class="list">
+            <li>Clean layout that feels approachable and uncluttered</li>
+            <li>Simple structure that makes daily use feel natural</li>
+            <li>Thoughtful design centered around comfort and balance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="cta-box">
+        <h2>Wellness, made simple</h2>
+        <p>
+          dova health & wellness is built to support a more mindful, organized, and
+          balanced daily routine while keeping the experience private and easy to use.
+        </p>
+        <div class="hero-actions" style="justify-content:center; margin-bottom:0;">
+          <a href="terms.html" class="btn btn-primary">View Terms</a>
+          <a href="usage.html" class="btn btn-secondary">View Usage</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-box">
+        <p>© 2026 dova health & wellness. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="usage.html">Usage</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
