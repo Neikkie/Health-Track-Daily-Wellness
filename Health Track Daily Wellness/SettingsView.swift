@@ -9,6 +9,7 @@ import SwiftUI
 import UserNotifications
 import PDFKit
 import MessageUI
+import WebKit
 
 struct SettingsView: View {
     @State private var entries: [WellnessEntry] = []
@@ -24,6 +25,9 @@ struct SettingsView: View {
     @State private var showingPermissionAlert = false
     @State private var showingExportAlert = false
     @State private var exportAlertMessage = ""
+    @State private var showingWebView = false
+    @State private var webViewURL: URL?
+    @State private var webViewTitle = ""
     
     var body: some View {
         NavigationStack {
@@ -94,6 +98,63 @@ struct SettingsView: View {
                     Text("Export your wellness data to share or backup")
                 }
                 
+                // Links Section
+                Section {
+                    Button(action: {
+                        webViewURL = URL(string: "https://neikkie.github.io/Health-Track-Daily-Wellness/")
+                        webViewTitle = "Home"
+                        showingWebView = true
+                    }) {
+                        HStack {
+                            Label("Home", systemImage: "house.fill")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    
+                    Button(action: {
+                        webViewURL = URL(string: "https://neikkie.github.io/Health-Track-Daily-Wellness/usage")
+                        webViewTitle = "Usage Guide"
+                        showingWebView = true
+                    }) {
+                        HStack {
+                            Label("Usage Guide", systemImage: "book.fill")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    
+                    Button(action: {
+                        webViewURL = URL(string: "https://neikkie.github.io/Health-Track-Daily-Wellness/privacy")
+                        webViewTitle = "Privacy Policy"
+                        showingWebView = true
+                    }) {
+                        HStack {
+                            Label("Privacy Policy", systemImage: "hand.raised.fill")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    
+                    Button(action: {
+                        webViewURL = URL(string: "https://neikkie.github.io/Health-Track-Daily-Wellness/terms")
+                        webViewTitle = "Terms of Service"
+                        showingWebView = true
+                    }) {
+                        HStack {
+                            Label("Terms of Service", systemImage: "doc.text.fill")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                } header: {
+                    Text("Resources")
+                }
+                
                 // About Section
                 Section {
                     HStack {
@@ -128,6 +189,11 @@ struct SettingsView: View {
             .sheet(isPresented: $showingMessageCompose) {
                 if let data = exportedData {
                     MessageComposeView(data: data)
+                }
+            }
+            .sheet(isPresented: $showingWebView) {
+                if let url = webViewURL {
+                    WebViewSheet(url: url, title: webViewTitle)
                 }
             }
             .alert("Notifications Permission", isPresented: $showingPermissionAlert) {
@@ -513,6 +579,58 @@ struct MessageComposeView: UIViewControllerRepresentable {
         
         func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
             parent.dismiss()
+        }
+    }
+}
+
+// WebView Sheet for in-app browsing
+struct WebViewSheet: View {
+    let url: URL
+    let title: String
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationStack {
+            WebView(url: url)
+                .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Done") {
+                            dismiss()
+                        }
+                    }
+                }
+        }
+    }
+}
+
+// WebView wrapper
+struct WebView: UIViewRepresentable {
+    let url: URL
+    
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        webView.navigationDelegate = context.coordinator
+        return webView
+    }
+    
+    func updateUIView(_ webView: WKWebView, context: Context) {
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+            // Show loading indicator if needed
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            // Hide loading indicator if needed
         }
     }
 }
